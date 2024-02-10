@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>
+    Violets list
+    <a href="{% url 'club:violet-create' %}" class="btn btn-primary">&#10133;</a>
+  </h1>
+  {% block search %}
+    {% include "includes/search.html" %}
+  {% endblock %}
+  <br>
+  {% if violet_list %}
+    <table class="table">
+        <tr>
+          <th>Violet_ID</th>
+          <th>Sort</th>
+          <th>Flower</th>
+          <th>Size</th>
+          <th>Leaf</th>
+          <th>members having in collection</th>
+          <th>Add/delete my list</th>
+        </tr>
+      {% for violet in violet_list %}
+        <tr>
+          <td><a href="{% url "club:violet-detail" pk=violet.id %} ">{{ violet.id }}</a></td>
+          <td>{{ violet.sort }}</td>
+          <td>{{ violet.variety.flower }}</td>
+          <td>{{ violet.variety.size }}</td>
+          <td>{{ violet.variety.leaf }}</td>
+          <td>{{ violet.member.count }}</td>
+          <td>
+            <form method="POST" action="{% url "club:assign-violet" pk=violet.id %}">
+              {% csrf_token %}
+              {% if request.user not in violet.member.all %}
+                <button class="btn btn-success" type="submit">Add to my list</button>
+              {% else %}
+                <button class="btn btn-warning" type="submit">Delete with my list</button>
+              {% endif %}
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no violet in club</p>
+  {% endif %}
+{% endblock %}

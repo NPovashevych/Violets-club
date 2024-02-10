@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Varieties List <a href="{% url 'club:variety-create' %}" class="btn btn-primary">&#10133;</a></h1>
+  {% if variety_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Flower</th>
+        <th>Size</th>
+        <th>Leaf</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    {% for variety in variety_list %}
+      <tr>
+        <td>{{ variety.id }}</td>
+        <td>{{ variety.flower }}</td>
+        <td>{{ variety.size }}</td>
+        <td>{{ variety.leaf }}</td>
+        <td><a href="{% url 'club:variety-update' pk=variety.id %}">UPDATE</a></td>
+        <td><a href="{% url 'club:variety-delete' pk=variety.id %}">DELETE</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no variety in the service.</p>
+  {% endif %}
+{% endblock %}

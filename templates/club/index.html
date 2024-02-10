@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}
+  <title>Home page</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}  
+  <h1>
+    <img class="title" src="{% static 'img/images_6.jpg' %}" alt="">
+    V <img class="title" src="{% static 'img/images_6.jpg' %}" alt="">
+    I <img class="title" src="{% static 'img/images_6.jpg' %}" alt="">
+    O <img class="title" src="{% static 'img/images_6.jpg' %}" alt="">
+    L <img class="title" src="{% static 'img/images_6.jpg' %}" alt="">
+    E <img class="title" src="{% static 'img/images_6.jpg' %}" alt="">
+    T <img class="title" src="{% static 'img/images_6.jpg' %}" alt="">
+    S <img class="title" src="{% static 'img/images_6.jpg' %}" alt="">
+  </h1>
+  <p class="text">Welcome to the club of violet lovers!</p>
+  <div class="section">
+    <h3>For caressing and communication:</h3>
+    <p class="text1"><strong>{{ num_violets }}</strong> violets <strong>{{ num_varieties }}</strong> varieties!</p>
+    <p class="text1"><strong>{{ num_members }}</strong> members: </p>
+    <ul>
+      <li class="text1">{{ num_statuses_beginner }} beginner;</li>
+      <li class="text1">{{ num_statuses_amateur }} amateur;</li>
+      <li class="text1">{{ num_statuses_professional }} professional.</li>
+    </ul>
+    <br>
+  </div>
+  <div class="section">
+    <h3>Top collection:</h3>
+    <p class="text1">Club member <strong>{{ name_of_member_with_max_violets }} </strong> 
+      has <strong>{{ num_violets_of_member_with_max_violets }}</strong> violets!</p>
+    <br>
+  </div>
+  <div class="section">  
+    <h3>Tip of the day:</h3>
+    {% if request.user.is_superuser %}
+      <a href="{% url 'club:post-create' %}" class="btn btn-primary">&#10133;</a>  
+    {% endif %}
+    {% for post in posts %}
+      {% if post.id == day_number %}
+        <h5>
+          {{ post.title }}
+          {% if request.user.is_superuser %}
+            <a href="{% url 'club:post-update' pk=post.id %}" class="btn btn-primary">UPDATE</a>
+          {% endif %}
+        </h5>
+    <hr>
+    <p>{{ post.content|truncatewords:250 }}</p>
+    <hr>    
+      {% endif %}
+    {% endfor %}
+  </div>  
+    <hr>
+    <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+    
+{% endblock %}
