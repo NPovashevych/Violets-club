@@ -28,14 +28,24 @@ h3 {
     font-size: xx-large;
 }
 
+.tip {
+    color: darkblue;
+    font-size: large;
+}
+
 .text {
     font-size: xx-large;
     color: indigo;
+    font-style: italic;
 }
 
 .text1 {
     font-size: x-large;
     color: indigo;
+}
+
+.hint {
+    color: darkgrey;
 }
 
 .sidebar {
@@ -92,4 +102,8 @@ td, th {
 
 th {
     color: blueviolet;
+}
+
+.hidden-button {
+    display: none;
 }

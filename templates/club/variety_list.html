@@ -19,7 +19,7 @@
         <td>{{ variety.size }}</td>
         <td>{{ variety.leaf }}</td>
         <td><a href="{% url 'club:variety-update' pk=variety.id %}">UPDATE</a></td>
-        <td><a href="{% url 'club:variety-delete' pk=variety.id %}">DELETE</a></td>
+        <td><a href="{% url 'club:variety-delete' pk=variety.id %}" style="color: red;">DELETE</a></td>
       </tr>
     {% endfor %}
     </table>

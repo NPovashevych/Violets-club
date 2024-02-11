@@ -2,15 +2,13 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    Status list
-  </h1>
+  <h1>Status list</h1>
   <br>
   {% if status_list %}
     <ul>
       {% for status in status_list %}
-        <li>
-          {{ status.name }}: {{ status.members.count }} club members
+        <li class="text1">
+          {{ status.name }}: <strong>{{ status.members.count }}</strong> club members
         </li>
       {% endfor %}
     </ul>
