@@ -1,8 +1,6 @@
 from datetime import date
-
-from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic, View
@@ -10,7 +8,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import (
     MemberSearchForm,
     VioletSearchForm,
-    MemberCreationForm, VioletForm, MemberUpdateForm,
+    MemberCreationForm,
+    VioletForm,
+    MemberUpdateForm,
 )
 
 from club.models import Member, Status, Violet, Variety, Post
