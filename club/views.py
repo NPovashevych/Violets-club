@@ -20,13 +20,22 @@ def index(request: HttpRequest) -> HttpResponse:
     num_members = Member.objects.count()
     num_violets = Violet.objects.count()
     num_varieties = Variety.objects.count()
-    num_statuses_beginner = Member.objects.filter(status__name="beginner").count()
-    num_statuses_professional = Member.objects.filter(status__name="professional").count()
-    num_statuses_amateur = Member.objects.filter(status__name="amateur").count()
-    members_with_violets_count = Member.objects.annotate(num_violets=Count("violets"))
-    member_with_max_violets = members_with_violets_count.order_by('-num_violets').first()
+    status_counts = (
+        Member.objects.values("status__name").
+        annotate(num_users=Count("id"))
+    )
+    num_statuses = (
+        {num_status["status__name"]: num_status["num_users"]
+         for num_status in status_counts}
+    )
+    members_with_violets = (
+        Member.objects.annotate(num_violets=Count("violets"))
+    )
+    member_with_max_violets = (
+        members_with_violets.order_by("-num_violets").first()
+    )
     name_of_member_with_max_violets = member_with_max_violets.username
-    num_violets_of_member_with_max_violets = member_with_max_violets.num_violets
+    num_violets_of_member_with_max = member_with_max_violets.num_violets
     posts = Post.objects.all()
     day_number = date.today().day
     num_visits = request.session.get("num_visits", 0)
@@ -35,10 +44,8 @@ def index(request: HttpRequest) -> HttpResponse:
         "num_members": num_members,
         "num_violets": num_violets,
         "num_varieties": num_varieties,
-        "num_statuses_beginner": num_statuses_beginner,
-        "num_statuses_professional": num_statuses_professional,
-        "num_statuses_amateur": num_statuses_amateur,
-        "num_violets_of_member_with_max_violets": num_violets_of_member_with_max_violets,
+        "num_statuses": num_statuses,
+        "num_violets_of_member_with_max": num_violets_of_member_with_max,
         "name_of_member_with_max_violets": name_of_member_with_max_violets,
         "posts": posts,
         "day_number": day_number,

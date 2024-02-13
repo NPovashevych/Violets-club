@@ -47,7 +47,8 @@ class ModelTest(TestCase):
 
     def test_variety_str(self):
         variety = Variety.objects.get(id=1)
-        expected_object_name = f"{variety.flower} ({variety.size}, {variety.leaf})"
+        expected_object_name = (f"{variety.flower} "
+                                f"({variety.size}, {variety.leaf})")
         self.assertEqual(str(variety), expected_object_name)
 
     def test_violet_str(self):

@@ -1,7 +1,7 @@
 from django.db import models
 
-
 from django.contrib.auth.models import AbstractUser
+
 from django.urls import reverse
 
 from club_service import settings
@@ -45,7 +45,8 @@ class Violet(models.Model):
         ordering = ("sort",)
 
     def __str__(self):
-        return f"{self.sort} ({self.variety.flower}, {self.variety.size}, {self.variety.leaf})"
+        return (f"{self.sort} ({self.variety.flower}, "
+                f"{self.variety.size}, {self.variety.leaf})")
 
 
 class Member(AbstractUser):
@@ -53,8 +54,9 @@ class Member(AbstractUser):
     status = models.ForeignKey(
         Status,
         on_delete=models.CASCADE,
-        default=1,
-        related_name="members"
+        related_name="members",
+        null=True,
+        blank=True,
     )
     country = models.CharField(max_length=60, blank=True, null=True)
     city = models.CharField(max_length=60, blank=True, null=True)
@@ -80,6 +82,3 @@ class Post(models.Model):
 
     class Meta:
         ordering = ("-created_time",)
-
-    def __str__(self):
-        return self
