@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+
+{% block content %}
+  <h1>{{ member.first_name }} {{ member.last_name }}</h1>
+  <hr>
+  <p><strong>Experience: </strong>{{ member.experience }} year{{ member.experience|pluralize }}</p>
+  <p><strong>Status in the club: </strong>{{ member.status }}</p>
+  <p><strong>From: </strong>{{ member.city }} ({{ member.country }})</p>
+  <p><strong>My contact: </strong>{{ member.email }}</p>
+  <div class="ml-3">
+    <h3>Violets:</h3>
+    {% if member.violets.all %}
+      <table class="table">
+        <tr>
+          <th>Sort</th>
+          <th>Flower</th>
+          <th>Size</th>
+          <th>Leaf</th>
+        </tr>
+      {% for violet in member.violets.all %}
+        <tr>
+          <td>{{ violet.sort }}</td>
+          <td>{{ violet.variety.flower }}</td>
+          <td>{{ violet.variety.size }}</td>
+          <td>{{ violet.variety.leaf }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <p>No violets!</p>  
+    {% endif %}
+  </div>
+  <a href="{% url 'club:member-update' pk=member.id %}" class="btn btn-secondary">Update</a>
+  <a href="{% url 'club:member-delete' pk=member.id %}" class="btn btn-danger">Delete</a>
+{% endblock %}

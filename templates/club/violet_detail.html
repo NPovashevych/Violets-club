@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load static %} 
+
+{% block content %}
+<h1>{{ violet.sort }}</h1>
+  <h3>Variety: </h3>
+  <div class="details">
+    <div class="text-details">
+        <p>Flower: {{ violet.variety.flower }}</p>
+        <p>Size: {{ violet.variety.size }}</p>
+        <p>Leaf: {{ violet.variety.leaf }}</p>
+    </div>
+    <div class="image-details">
+        <img class="photo" src="{% static 'img/noimage.jpg' %}" alt="">
+    </div>
+  </div>
+  <h3>Club members who have this sort:</h3>
+  <hr>
+  <form method="POST" action="{% url "club:assign-violet" pk=violet.id %}">
+    {% csrf_token %}
+    {% if request.user not in violet.member.all %}
+      <button class="btn btn-secondary" type="submit">Assign me this sort</button>
+    {% else %}
+      <button class="btn btn-danger" type="submit">Delete this sort with my list</button>
+    {% endif %}
+  </form>
+  <br>
+  <table class="table">
+    <tr>
+      <th>Fullname</th>
+      <th>Status</th>
+      <th>All violets</th>
+      <th>Contact</th>
+    </tr>
+    {% for member in violet.member.all %}
+      <tr>
+        <td>{{ member.first_name }} {{ member.last_name }}</td>
+        <td>{{ member.status }}</td>
+        <td>{{ member.violets.count }}</td>
+        <td>{{ member.email }}</td>
+      </tr>
+    {% empty %}
+      <p>No member</p>
+    {% endfor %}
+  </table>
+  
+  <hr>
+  <hr>
+  <a href="{% url 'club:violet-update' pk=violet.id %}" class="btn btn-secondary">Update</a>
+  <a href="{% url 'club:violet-delete' pk=violet.id %}" class="btn btn-danger">Delete</a>
+{% endblock %}

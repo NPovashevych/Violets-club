@@ -1,0 +1,28 @@
+<div class="sidebar">
+  <ul class="sidebar-nav">
+  {% load static %}
+  
+    {% if user.is_authenticated %}
+      <li>User: <a href="{% url 'club:member-detail' user.pk %}">{{ user.username }}</a></li>
+      <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+    {% else %}
+      <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+    {% endif %}
+    <hr>
+  
+    <li><a href="{% url 'club:index' %}">Home page</a></li>
+    <li><a href="{% url 'club:variety-list' %}">Varieties</a></li>
+    <li><a href="{% url 'club:violet-list' %}">Violets</a></li>
+    <li><a href="{% url 'club:member-list' %}">Members</a></li>
+    <li><a href="{% url 'club:status-list' %}">Statuses</a></li>
+  </ul>
+  <hr>
+  {% load static %}
+    <img class="image" src="{% static 'img/images_2.jpg' %}" alt="top">
+    <hr>  
+    <img class="image" src="{% static 'img/images_3.jpg' %}" alt="top">
+    <hr>  
+    <img class="image" src="{% static 'img/images_4.jpg' %}" alt="top">
+
+  <hr>
+</div>
