@@ -15,7 +15,7 @@
         <img class="photo" src="{% static 'img/noimage.jpg' %}" alt="">
     </div>
   </div>
-  <h3>Club members who have this variety:</h3>
+  <h3>Club members who have this sort:</h3>
   <hr>
   <form method="POST" action="{% url "club:assign-violet" pk=violet.id %}">
     {% csrf_token %}

@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 from django.urls import reverse
 
-from club_service import settings
+from django.conf import settings
 
 
 class Variety(models.Model):
